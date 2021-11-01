@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Tenshinhan.ErgListItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Tenshinhan"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="133" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Image x:Name="ErgImg" />
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label Content="NULL TITLE" FontSize="20" Grid.Row="0" x:Name="TitleText"/>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label Content="MOGAMI SOFT" Grid.Row="0" x:Name="MakerText"/>
+                <Label Content="最終 2019/01/01 23:59:59" Grid.Row="1" x:Name="LastUpdateTimeText"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
