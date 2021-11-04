@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MicrosoftGraph;
 using Tenshinhan.DataClass;
+using System.Diagnostics;
+using Microsoft.Win32;
 
 namespace Tenshinhan
 {
@@ -97,11 +99,42 @@ namespace Tenshinhan
             }
             ergFileManager = null;
         }
+        private async void LanuchErg(LocalErgSave erg)
+        {
+            if (!ergFileManager.isReady)
+            {
+                MessageBox.Show("起動直後の処理中です。少々お待ちください。");
+                return;
+            } 
+                
+            if (ergFileManager.CheckErgSaveDataUpdate(erg))
+            {
+                var upResult = MessageBox.Show(
+                    "OneDriveに最新のセーブデータを確認しました。\nダウンロードしますか？",
+                    "更新確認",
+                    MessageBoxButton.YesNo);
+                if(upResult == MessageBoxResult.Yes)
+                {
+                    await ergFileManager.DownloadLatestSaveData(erg);
+                }
+            }
+            Process p = Process.Start(erg.appPath);
+            p.WaitForExit();
+            var result = MessageBox.Show(
+                "セーブデータをOneDriveにアップロードしますか？",
+                "終了時確認",
+                MessageBoxButton.YesNo);
+            if(result == MessageBoxResult.Yes)
+            {
+                ergFileManager.UpdateOneDriveSaveData(erg);
+            }
+        }
         private void SetErgListBox(List<LocalErgSave> list)
         {
+            ErgList.Items.Clear();
             list.ForEach(erg =>
             {
-                ErgListItem ergListItem = new(erg);
+                ErgListItem ergListItem = new(erg, LanuchErg);
                 ErgList.Items.Add(ergListItem);
             });
             
@@ -124,6 +157,11 @@ namespace Tenshinhan
                 OneDriveLogoutMenuItem.IsEnabled = false;
                 MainWindowWindow.Title = "天津飯";
             }
+        }
+
+        private void UpdateErgListBtn_Click(object sender, RoutedEventArgs e)
+        {
+            SetErgListBox(ergFileManager.ergList);
         }
     }
 }
