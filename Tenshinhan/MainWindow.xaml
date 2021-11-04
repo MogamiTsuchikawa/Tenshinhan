@@ -5,8 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tenshinhan"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Tenshinhan" Height="450" Width="800" Loaded="Window_Loaded"
+        x:Name="MainWindowWindow">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="ゲーム">
+                <MenuItem x:Name="AddNewGameMenuItem" Header="新しく買ったゲームを登録" Click="AddNewGameMenuItem_Click" />
+                <MenuItem x:Name="AddGameMenuItem" Header="既にセーブデータを管理しているゲームを追加する" Click="AddGameMenuItem_Click" />
+            </MenuItem>
+            <MenuItem Header="アカウント">
+                <MenuItem x:Name="OneDriveLoginMenuItem" Header="ログイン" Click="OneDriveLoginMenuItem_Click" />
+                <MenuItem x:Name="OneDriveLogoutMenuItem" Header="ログアウト" Click="OneDriveLogoutMenuItem_Click" />
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1">
+            <Button Content="ゲーム一覧の更新" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="20" Width="90"/>
+    
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid Margin="5 5 5 5" x:Name="ErgList">
+                
+            </Grid>
+        </Grid>
+        
 
     </Grid>
 </Window>
