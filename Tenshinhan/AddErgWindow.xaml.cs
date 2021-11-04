@@ -67,7 +67,7 @@ namespace Tenshinhan
             }
             appPath = AppPathSelectBox.SelectPath;
             saveFolderPath = SaveFolderSelectBox.SelectPath;
-            
+            this.Close();
         }
     }
 }

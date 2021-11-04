@@ -59,7 +59,7 @@
             <local:FileFolderSelectBox Grid.Column="1" Grid.Row="0" x:Name="AppPathSelectBox"/>
             <Label Grid.Column="0" Grid.Row="1" Content="ｾｰﾌﾞﾌｫﾙﾀﾞ位置" />
             <local:FileFolderSelectBox Grid.Column="1" Grid.Row="1" FolderSelectMode="True" x:Name="SaveFolderSelectBox"/>
-            <Button x:Name="AddBtn" Content="Button" Grid.Column="1" Margin="252,126,28,18" Grid.Row="2" Click="AddBtn_Click"/>
+            <Button x:Name="AddBtn" Content="ゲームを追加" Grid.Column="1"  Grid.Row="2" Click="AddBtn_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,5"/>
 
         </Grid>
 
