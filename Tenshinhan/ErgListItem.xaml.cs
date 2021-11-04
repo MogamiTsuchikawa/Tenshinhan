@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tenshinhan.DataClass;
 
 namespace Tenshinhan
 {
@@ -20,13 +21,15 @@ namespace Tenshinhan
     /// </summary>
     public partial class ErgListItem : UserControl
     {
-        string title { get; set; }
-        string maker { get; set; }
-        DateTime lastUpdateTime { get; set; }
+        public LocalErgSave erg { get; private set; }
 
-        public ErgListItem()
+        public ErgListItem(LocalErgSave erg)
         {
+            this.erg = erg;
             InitializeComponent();
+            TitleText.Content = erg.title;
+            MakerText.Content = erg.maker;
+            LastUpdateTimeText.Content = $"最終 {erg.lastUpdateTime.ToString()}";
         }
     }
 }

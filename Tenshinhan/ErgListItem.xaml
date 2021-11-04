@@ -19,7 +19,7 @@
                 <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Label Content="NULL TITLE" FontSize="20" Grid.Row="0" x:Name="TitleText"/>
+            <Label Content="NULL TITLE" FontSize="18" Grid.Row="0" x:Name="TitleText"/>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
