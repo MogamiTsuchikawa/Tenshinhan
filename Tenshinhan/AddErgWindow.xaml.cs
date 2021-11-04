@@ -46,10 +46,28 @@ namespace Tenshinhan
                 SaveFolderSelectBox.IsEnabled = false;
             }
         }
+        public string gameName { get; private set; }
+        public string gameMaker { get; private set; }
+        public string appPath { get; private set; }
+        public string saveFolderPath { get; private set; }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
+            if(kind == Kind.AddNewGame)
+            {
+                //新規ゲーム
+                gameName = GameNameTextBox.Text;
+                gameMaker = GameMakerTextBox.Text;
 
+            }
+            else
+            {
+                //既存ゲーム
+                //OneDriveから取得したリストを利用する
+            }
+            appPath = AppPathSelectBox.SelectPath;
+            saveFolderPath = SaveFolderSelectBox.SelectPath;
+            
         }
     }
 }
