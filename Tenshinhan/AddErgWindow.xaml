@@ -1,0 +1,66 @@
+﻿<Window x:Class="Tenshinhan.AddErgWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tenshinhan"
+        mc:Ignorable="d"
+        Title="AddErgWindow" Height="450" Width="400" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90" />
+            <RowDefinition Height="120" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <GroupBox Header="既存のゲームの登録" Margin="5 5 5 5">
+                <Grid>
+                    <Label Content="ゲーム名"/>
+                    <ComboBox Margin="80 5 5 5" Height="20" VerticalAlignment="Top" x:Name="GameSelectComboBox"/>
+
+                </Grid>
+
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="1">
+            <GroupBox Header="新規ゲームの登録" Margin="5 5 5 5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="ゲーム名" Grid.Column="0" Grid.Row="0"/>
+                    <Label Content="メーカー" Grid.Column="0" Grid.Row="1"/>
+                    <TextBox Grid.Column="1" Grid.Row="0" Margin="3" x:Name="GameNameTextBox"/>
+                    <TextBox Grid.Column="1" Grid.Row="1" Margin="3" x:Name="GameMakerTextBox"/>
+                    <Label Grid.Column="0" Grid.Row="2" Content="ｾｰﾌﾞﾌｫﾙﾀﾞ位置" />
+                    <local:FileFolderSelectBox Grid.Column="1" Grid.Row="2" FolderSelectMode="True" x:Name="SaveFolderSelectBox"/>
+
+                </Grid>
+            </GroupBox>
+
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" Content="App位置" />
+            <local:FileFolderSelectBox Grid.Column="1" Grid.Row="0" x:Name="AppPathSelectBox"/>
+            <Button x:Name="AddBtn" Content="Button" Grid.Column="1" Margin="252,126,28,18" Grid.Row="2" Click="AddBtn_Click"/>
+
+        </Grid>
+
+    </Grid>
+</Window>
