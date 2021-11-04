@@ -17,11 +17,13 @@ namespace Tenshinhan
     {
         private MicrosoftGraph.MicrosoftGraph graph;
         private bool isReady = false;
-        private List<LocalErgSave> ergList;
+        public List<LocalErgSave> ergList { get; private set; }
         private string jsonPath = "ergs.json";
         private DriveItem targetOneDriveFolder;
         private DriveItem serverJson;
         private string localServerJsonPath = "server.json";
+        public Action<List<LocalErgSave>> windowUpdateAction;
+        public List<ErgSave> serverErgList { get; private set; }
         public ErgFileManager(MicrosoftGraph.MicrosoftGraph graph)
         {
             this.graph = graph;
@@ -33,6 +35,15 @@ namespace Tenshinhan
             ergList = JsonSerializer.Deserialize<List<LocalErgSave>>(jsonStr);
             //OneDriveに指定のフォルダとjsonファイルがあるかを確認する
             CheckInitSettings();
+        }
+        public void SaveJson()
+        {
+            string jsonStr = JsonSerializer.Serialize(ergList);
+            System.IO.File.WriteAllText(jsonPath, jsonStr);
+        }
+        public void SaveServerJson()
+        {
+
         }
         private async void CheckInitSettings()
         {
@@ -63,11 +74,14 @@ namespace Tenshinhan
             newErg.appPath = appPath;
             newErg.saveDataPath = saveFolderPath;
             newErg.uuid = Guid.NewGuid().ToString("D");
+            newErg.lastUpdateTime = DateTime.Now;
             //saveデータをzipにする（初回）
             string zipPath = GenerateSaveDataZip(newErg);
             //OneDriveにアップロードしてFileIDを得てnewErgに入れる
             //OneDriveのjsonに追記する
             ergList.Add(newErg);
+            windowUpdateAction?.Invoke(ergList);
+            SaveJson();
         }
         public string GenerateSaveDataZip(LocalErgSave targetErg)
         {
