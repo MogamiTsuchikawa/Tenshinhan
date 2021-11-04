@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Tenshinhan.DataClass
 {
-    class Erg
+    public class Erg
     {
+        public string uuid { get; set; }
         public string title { get; set; }
         public string maker { get; set; }
         public string janCode { get; set; }
