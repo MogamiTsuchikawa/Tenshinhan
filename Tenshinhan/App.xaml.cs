@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using MicrosoftGraph;
 
 namespace Tenshinhan
 {
@@ -13,5 +14,11 @@ namespace Tenshinhan
     /// </summary>
     public partial class App : Application
     {
+        static App()
+        {
+            MicrosoftGraph = new MicrosoftGraph.MicrosoftGraph();
+        }
+        public static MicrosoftGraph.MicrosoftGraph MicrosoftGraph;
     }
+    
 }
