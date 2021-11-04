@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MicrosoftGraph;
+using Tenshinhan.DataClass;
 
 namespace Tenshinhan
 {
@@ -21,6 +22,7 @@ namespace Tenshinhan
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ErgFileManager ergFileManager;
         public MainWindow()
         {
             InitializeComponent();
@@ -48,12 +50,22 @@ namespace Tenshinhan
 
         private void AddNewGameMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            if (ergFileManager == null) return;
             AddErgWindow addErgWindow = new(AddErgWindow.Kind.AddNewGame);
             addErgWindow.ShowDialog();
+            if (addErgWindow.appPath == null) return;
+
+            ergFileManager.AddNewErg(
+                addErgWindow.gameName, 
+                addErgWindow.gameMaker, 
+                addErgWindow.appPath, 
+                addErgWindow.saveFolderPath);
+
         }
 
         private void AddGameMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            if (ergFileManager == null) return;
             AddErgWindow addErgWindow = new(AddErgWindow.Kind.AddGame);
             addErgWindow.ShowDialog();
         }
@@ -69,6 +81,7 @@ namespace Tenshinhan
                 OneDriveLogoutMenuItem.IsEnabled = true;
                 MainWindowWindow.Title = "チャーハン天津飯(Microsoftログイン済)";
             }
+            ergFileManager = new ErgFileManager(App.MicrosoftGraph);
         }
 
         private async void OneDriveLogoutMenuItem_Click(object sender, RoutedEventArgs e)
@@ -82,6 +95,16 @@ namespace Tenshinhan
                 OneDriveLogoutMenuItem.IsEnabled = false;
                 MainWindowWindow.Title = "天津飯";
             }
+            ergFileManager = null;
+        }
+        private void SetErgListBox(List<LocalErgSave> list)
+        {
+            list.ForEach(erg =>
+            {
+                ErgListItem ergListItem = new(erg);
+                ErgList.Items.Add(ergListItem);
+            });
+            
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -92,6 +115,9 @@ namespace Tenshinhan
                 OneDriveLoginMenuItem.Header = "ログイン中";
                 OneDriveLoginMenuItem.IsEnabled = false;
                 MainWindowWindow.Title = "チャーハン天津飯(Microsoftログイン済)";
+                ergFileManager = new ErgFileManager(App.MicrosoftGraph);
+                ergFileManager.windowUpdateAction = SetErgListBox;
+                SetErgListBox(ergFileManager.ergList);
             }
             else
             {

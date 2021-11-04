@@ -25,14 +25,9 @@
         </Menu>
         <Grid Grid.Row="1">
             <Button Content="ゲーム一覧の更新" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="20" Width="90"/>
-    
-        </Grid>
-        <Grid Grid.Row="2">
-            <Grid Margin="5 5 5 5" x:Name="ErgList">
-                
-            </Grid>
-        </Grid>
-        
 
+        </Grid>
+        <ListBox Grid.Row="2" Margin="5 5 5 5" x:Name="ErgList">
+        </ListBox>
     </Grid>
 </Window>
