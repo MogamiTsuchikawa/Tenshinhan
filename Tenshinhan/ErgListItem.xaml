@@ -6,9 +6,9 @@
              xmlns:local="clr-namespace:Tenshinhan"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="600">
-    <Grid>
+    <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="133" />
+            <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
