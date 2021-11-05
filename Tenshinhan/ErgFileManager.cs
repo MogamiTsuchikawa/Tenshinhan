@@ -136,7 +136,8 @@ namespace Tenshinhan
             System.IO.File.Delete(zipPath);
             target.oneDriveFileId = uploadSaveData.Id;
             var serverver = serverErgList.Where(e => e.uuid == target.uuid).ToList()[0];
-            serverver = (ErgSave)target;
+            serverver.lastUpdateTime = target.lastUpdateTime;
+            serverver.oneDriveFileId = target.oneDriveFileId;
             SaveServerJson();
             SaveJson();
             windowUpdateAction?.Invoke(ergList);
@@ -177,7 +178,7 @@ namespace Tenshinhan
             }
             catch(Exception ex)
             {
-                return "";
+                return "";//あとでなんとかする
             }
             return $"{targetErg.uuid}.zip";
         }

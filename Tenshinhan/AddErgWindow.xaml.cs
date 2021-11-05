@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MicrosoftGraph;
 
 namespace Tenshinhan
 {
@@ -24,11 +25,21 @@ namespace Tenshinhan
             AddNewGame, AddGame
         }
         private Kind kind;
-        public AddErgWindow(Kind kind)
+        private MicrosoftGraph.MicrosoftGraph microsoftGraph;
+        public AddErgWindow(Kind kind, MicrosoftGraph.MicrosoftGraph microsoftGraph)
         {
+            this.microsoftGraph = microsoftGraph;
             this.kind = kind;
             InitializeComponent();
-            if (kind == Kind.AddGame) ;
+            if (kind == Kind.AddGame)
+            {
+                AddErgToList();
+            }
+        }
+        private async void AddErgToList()
+        {
+            var client = microsoftGraph.GetClient();
+            //あとでここから書く
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
