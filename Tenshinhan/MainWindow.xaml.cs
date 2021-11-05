@@ -52,8 +52,12 @@ namespace Tenshinhan
 
         private void AddNewGameMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (ergFileManager == null) return;
-            AddErgWindow addErgWindow = new(AddErgWindow.Kind.AddNewGame);
+            if (ergFileManager == null) 
+            {
+                RequestLoginMessage();
+                return; 
+            }
+            AddErgWindow addErgWindow = new(AddErgWindow.Kind.AddNewGame, App.MicrosoftGraph);
             addErgWindow.ShowDialog();
             if (addErgWindow.appPath == null) return;
 
@@ -67,8 +71,12 @@ namespace Tenshinhan
 
         private void AddGameMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (ergFileManager == null) return;
-            AddErgWindow addErgWindow = new(AddErgWindow.Kind.AddGame);
+            if (ergFileManager == null)
+            {
+                RequestLoginMessage();
+                return;
+            }
+            AddErgWindow addErgWindow = new(AddErgWindow.Kind.AddGame, App.MicrosoftGraph);
             addErgWindow.ShowDialog();
         }
 
@@ -129,6 +137,15 @@ namespace Tenshinhan
                 ergFileManager.UpdateOneDriveSaveData(erg);
             }
         }
+        private void RequestLoginMessage()
+        {
+            MessageBox.Show(
+                "先にMicrosoftアカウントへのログインが必要です",
+                "ログインエラー",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error
+                );
+        }
         private void SetErgListBox(List<LocalErgSave> list)
         {
             ErgList.Items.Clear();
@@ -161,6 +178,11 @@ namespace Tenshinhan
 
         private void UpdateErgListBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (ergFileManager == null)
+            {
+                RequestLoginMessage();
+                return;
+            }
             SetErgListBox(ergFileManager.ergList);
         }
     }
