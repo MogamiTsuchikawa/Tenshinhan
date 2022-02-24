@@ -15,6 +15,7 @@ namespace Tenshinhan
 {
     public class ErgFileManager
     {
+        public static ErgFileManager instanse;
         private MicrosoftGraph.MicrosoftGraph graph;
         public bool isReady { get; private set; } = false;
         public List<LocalErgSave> ergList { get; private set; }
@@ -26,6 +27,7 @@ namespace Tenshinhan
         public List<ErgSave> serverErgList { get; private set; }
         public ErgFileManager(MicrosoftGraph.MicrosoftGraph graph)
         {
+            instanse = this;
             this.graph = graph;
             if (!System.IO.File.Exists(jsonPath))
             {
@@ -168,6 +170,22 @@ namespace Tenshinhan
             SaveJson();
             windowUpdateAction?.Invoke(ergList);
             
+        }
+        public async void AddExistErg(string ergName, string makerName, string appPath, string saveFolderPath)
+        {
+            var client = await graph.GetClient();
+            LocalErgSave erg = new();
+            erg.title = ergName;
+            erg.maker = makerName;
+            erg.appPath = appPath;
+            erg.saveDataPath = saveFolderPath;
+            erg.uuid = serverErgList.Where(erg => erg.title == ergName).FirstOrDefault().uuid;
+            erg.lastUpdateTime = serverErgList.Where(erg => erg.title == ergName).FirstOrDefault().lastUpdateTime;
+            erg.oneDriveFileId = serverErgList.Where(erg => erg.title == ergName).FirstOrDefault().oneDriveFileId;
+            ergList.Add(erg);
+            await DownloadLatestSaveData(erg);
+            SaveJson();
+            windowUpdateAction?.Invoke(ergList);
         }
         public string GenerateSaveDataZip(LocalErgSave targetErg)
         {

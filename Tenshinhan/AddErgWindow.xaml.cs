@@ -36,10 +36,16 @@ namespace Tenshinhan
                 AddErgToList();
             }
         }
+        List<DataClass.ErgSave> notExistErgList = new();
         private async void AddErgToList()
         {
-            var client = microsoftGraph.GetClient();
-            //あとでここから書く
+            notExistErgList = ErgFileManager.instanse.serverErgList.Where(
+                erg => ErgFileManager.instanse.ergList.Where(e => e.title == erg.title).Count() == 0
+                ).ToList();
+            notExistErgList.ForEach(e =>
+            {
+                GameSelectComboBox.Items.Add(e.title);
+            });
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -54,7 +60,12 @@ namespace Tenshinhan
                 //新規ゲームの追加のコントロールを無効化する
                 GameNameTextBox.IsEnabled = false;
                 GameMakerTextBox.IsEnabled = false;
-                SaveFolderSelectBox.IsEnabled = false;
+                //SaveFolderSelectBox.IsEnabled = false;
+            }
+            if (kind == Kind.AddGame && notExistErgList.Count() == 0)
+            {
+                MessageBox.Show("追加できるゲームがありません");
+                this.Close();
             }
         }
         public string gameName { get; private set; }
@@ -75,6 +86,9 @@ namespace Tenshinhan
             {
                 //既存ゲーム
                 //OneDriveから取得したリストを利用する
+                var targetErg = notExistErgList[GameSelectComboBox.SelectedIndex];
+                gameName = targetErg.title;
+                gameMaker = targetErg.maker;
             }
             appPath = AppPathSelectBox.SelectPath;
             saveFolderPath = SaveFolderSelectBox.SelectPath;

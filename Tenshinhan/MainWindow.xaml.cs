@@ -78,6 +78,13 @@ namespace Tenshinhan
             }
             AddErgWindow addErgWindow = new(AddErgWindow.Kind.AddGame, App.MicrosoftGraph);
             addErgWindow.ShowDialog();
+            if(addErgWindow.appPath == null) return ;
+
+            ergFileManager.AddExistErg(
+                addErgWindow.gameName,
+                addErgWindow.gameMaker,
+                addErgWindow.appPath,
+                addErgWindow.saveFolderPath);
         }
 
         private async void OneDriveLoginMenuItem_Click(object sender, RoutedEventArgs e)
